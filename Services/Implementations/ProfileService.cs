@@ -1,8 +1,10 @@
 ﻿using LettercaixaAPI.DTOs;
 using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using BC = BCrypt.Net.BCrypt;
 
 namespace LettercaixaAPI.Services.Implementations
@@ -51,8 +53,54 @@ namespace LettercaixaAPI.Services.Implementations
                 return new BadRequestObjectResult(password);
 
             string token = await _auth.CreateTokenAsync(email);
-
             return new OkObjectResult(token);
+        }
+
+        public async Task<ActionResult> DeleteProfileAsync(string email, string password)
+        {
+            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
+
+            bool passwordIsCorrect = BC.Verify(password, profile.PasswordHash);
+            if(passwordIsCorrect.Equals(false))
+                return new BadRequestObjectResult(password);
+
+            _context.Profiles.Remove(profile);
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
+        }
+
+        public async Task<ActionResult<Profile>> UpdateProfileEmailAsync(string currentEmail, string newEmail) 
+        {
+            bool newEmailAlreadyExists = await _auth.VerifyIfProfileExistsAsync(newEmail);
+            if(newEmailAlreadyExists.Equals(true))
+                return new BadRequestObjectResult(newEmail);
+
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(currentEmail));
+            profile.Email = newEmail;
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(profile);
+        }
+
+        public async Task<ActionResult> UpdateProfileEmailAsync(string email, string currentPassword, string newPassword)
+        {
+            bool currentPasswordIsCorrect = await _auth.VerifyIfPasswordIsEqualAsync(email, currentPassword);
+            if (currentPasswordIsCorrect.Equals(false))
+                return new BadRequestObjectResult(currentPassword);
+
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
+            string newPasswordHash = BC.HashPassword(newPassword);
+            profile.PasswordHash = newPasswordHash;
+
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(newPassword);
+        }
+
+        public async Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string email, string pictureUrl) 
+        {
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
+            profile.ProfilePicture = pictureUrl;
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(profile);
         }
     }
 }
