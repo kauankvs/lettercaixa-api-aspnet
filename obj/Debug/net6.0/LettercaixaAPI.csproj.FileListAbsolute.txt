@@ -7,7 +7,9 @@ C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\LettercaixaAPI.pdb
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Humanizer.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll

@@ -1,6 +1,5 @@
 ﻿using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
-using LettercaixaAPI.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace LettercaixaAPI.Services.Implementations
         
         public async Task<bool> VerifyIfPasswordIsEqualAsync(string loginEmail, string loginPassword) 
         {
-            Profile? profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(loginEmail));
+            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(loginEmail));
             if(profile.Equals(null))
                 return false;
 
@@ -30,7 +29,7 @@ namespace LettercaixaAPI.Services.Implementations
 
         public async Task<bool> VerifyIfProfileExistsAsync(string email) 
         {
-            bool profileExists = await _context.Profiles.AnyAsync(p => p.Email.Equals(email));
+            bool profileExists = await _context.Profiles.AsNoTracking().AnyAsync(p => p.Email.Equals(email));
             return profileExists;
         }
 

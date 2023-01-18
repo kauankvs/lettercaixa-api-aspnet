@@ -81,7 +81,7 @@ namespace LettercaixaAPI.Services.Implementations
             return new OkObjectResult(profile);
         }
 
-        public async Task<ActionResult> UpdateProfileEmailAsync(string email, string currentPassword, string newPassword)
+        public async Task<ActionResult> UpdateProfilePasswordAsync(string email, string currentPassword, string newPassword)
         {
             bool currentPasswordIsCorrect = await _auth.VerifyIfPasswordIsEqualAsync(email, currentPassword);
             if (currentPasswordIsCorrect.Equals(false))

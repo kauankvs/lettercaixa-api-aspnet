@@ -1,4 +1,4 @@
-using LettercaixaAPI;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Implementations;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
+builder.Services.AddDbContext<LettercaixaContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
