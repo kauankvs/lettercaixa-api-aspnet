@@ -102,5 +102,21 @@ namespace LettercaixaAPI.Services.Implementations
             await _context.SaveChangesAsync();
             return new OkObjectResult(profile);
         }
-    }
+
+        public async Task<ActionResult<ProfileDisplay>> GetProfileAsync(string email)
+        {
+            Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
+
+            ProfileDisplay profileDisplay = new ProfileDisplay()
+            {
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                Email = email,
+                Birth = profile.Birth,
+                ProfilePicture = profile.ProfilePicture
+            };
+
+            return new OkObjectResult(profileDisplay);
+        }
+    } 
 }

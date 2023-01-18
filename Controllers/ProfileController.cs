@@ -16,32 +16,37 @@ namespace LettercaixaAPI.Controllers
 
         [HttpPost]
         [Route("register")]
-        public Task<ActionResult<Profile>> RegisterProfileAsync(ProfileDTO profileInput)
-            => _service.RegisterProfileAsync(profileInput);
+        public async Task<ActionResult<Profile>> RegisterProfileAsync(ProfileDTO profileInput)
+            => await _service.RegisterProfileAsync(profileInput);
 
         [HttpPost]
         [Route("login")]
-        public Task<ActionResult<string>> LoginAsync(string password, string email)
-            => _service.LoginAsync(password, email);
+        public async Task<ActionResult<string>> LoginAsync(string password, string email)
+            => await _service.LoginAsync(password, email);
 
         [HttpDelete]
         [Route("delete")]
-        public Task<ActionResult> DeleteProfileAsync(string email, string password)
-            => _service.DeleteProfileAsync(User.FindFirstValue(ClaimTypes.Email), password);
+        public async Task<ActionResult> DeleteProfileAsync(string email, string password)
+            => await _service.DeleteProfileAsync(User.FindFirstValue(ClaimTypes.Email), password);
 
         [HttpPut]
         [Route("update/email")]
-        public Task<ActionResult<Profile>> UpdateProfileEmailAsync(string currentEmail, string newEmail)
-            => _service.UpdateProfileEmailAsync(User.FindFirstValue(ClaimTypes.Email), newEmail);
+        public async Task<ActionResult<Profile>> UpdateProfileEmailAsync(string currentEmail, string newEmail)
+            => await _service.UpdateProfileEmailAsync(User.FindFirstValue(ClaimTypes.Email), newEmail);
 
         [HttpPut]
         [Route("update/password")]
-        public Task<ActionResult> UpdateProfilePasswordAsync(string email, string currentPassword, string newPassword)
-            => _service.UpdateProfilePasswordAsync(User.FindFirstValue(ClaimTypes.Email), currentPassword, newPassword);
+        public async Task<ActionResult> UpdateProfilePasswordAsync(string email, string currentPassword, string newPassword)
+            => await _service.UpdateProfilePasswordAsync(User.FindFirstValue(ClaimTypes.Email), currentPassword, newPassword);
 
         [HttpPut]
         [Route("profile-picture")]
-        public Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string email, string pictureUrl)
-            => _service.AddOrUpdateProfilePictureAsync(User.FindFirstValue(ClaimTypes.Email), pictureUrl);
+        public async Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string email, string pictureUrl)
+            => await _service.AddOrUpdateProfilePictureAsync(User.FindFirstValue(ClaimTypes.Email), pictureUrl);
+
+        [HttpGet]
+        [Route("profile")]
+        public async Task<ActionResult<ProfileDisplay>> GetProfileAsync(string email)
+            => await _service.GetProfileAsync(User.FindFirstValue(ClaimTypes.Email));
     }
 }
