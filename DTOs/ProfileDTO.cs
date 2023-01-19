@@ -24,5 +24,9 @@ namespace LettercaixaAPI.DTOs
         [Required(ErrorMessage = "Field is required!")]
         [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
+
+        [Required(ErrorMessage = "Field is required!")]
+        public string Username { get; set; } = null!;
+
     }
 }

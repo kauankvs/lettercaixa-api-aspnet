@@ -18,4 +18,6 @@ public partial class Profile
     public string? ProfilePicture { get; set; }
 
     public DateTime Birth { get; set; }
+
+    public string Username { get; set; } = null!;
 }

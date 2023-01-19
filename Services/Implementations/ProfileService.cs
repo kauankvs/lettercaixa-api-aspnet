@@ -35,6 +35,7 @@ namespace LettercaixaAPI.Services.Implementations
                 PasswordHash = passwordHash,
                 ProfilePicture = profileInput.ProfilePicture,
                 Birth = profileInput.Birth,
+                Username = profileInput.Username,
             };
 
             await _context.Profiles.AddAsync(profile);
@@ -108,15 +109,38 @@ namespace LettercaixaAPI.Services.Implementations
             Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
 
             ProfileDisplay profileDisplay = new ProfileDisplay()
-            {
+            { 
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
                 Email = email,
                 Birth = profile.Birth,
-                ProfilePicture = profile.ProfilePicture
+                ProfilePicture = profile.ProfilePicture,
+                Username = profile.Username,
             };
 
             return new OkObjectResult(profileDisplay);
+        }
+
+        public async Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync(string name) 
+        {
+            List<Profile> profiles = await _context.Profiles.AsNoTracking()
+                .Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name) || p.Username.Contains(name))
+                .ToListAsync();
+            if (profiles.Equals(null))
+                return new NoContentResult();
+
+            List<ProfileDisplay> usersProfile = new List<ProfileDisplay>();
+            foreach(Profile profile in profiles)
+            {
+                usersProfile.Add(new ProfileDisplay()
+                {
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    Birth = profile.Birth,
+                    Username = profile.Username,
+                });
+            }
+            return new OkObjectResult(usersProfile);
         }
     } 
 }

@@ -45,8 +45,13 @@ namespace LettercaixaAPI.Controllers
             => await _service.AddOrUpdateProfilePictureAsync(User.FindFirstValue(ClaimTypes.Email), pictureUrl);
 
         [HttpGet]
-        [Route("profile")]
+        [Route("my-account")]
         public async Task<ActionResult<ProfileDisplay>> GetProfileAsync(string email)
             => await _service.GetProfileAsync(User.FindFirstValue(ClaimTypes.Email));
+
+        [HttpGet]
+        [Route("{name}")]
+        public async Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync([FromRoute] string name)
+            => await _service.GetProfilesByNameAsync(name);
     }
 }
