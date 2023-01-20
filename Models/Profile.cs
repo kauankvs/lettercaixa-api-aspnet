@@ -5,7 +5,9 @@ namespace LettercaixaAPI.Models;
 
 public partial class Profile
 {
-    public int Id { get; set; }
+    public int ProfileId { get; set; }
+
+    public string Username { get; set; } = null!;
 
     public string FirstName { get; set; } = null!;
 
@@ -19,5 +21,5 @@ public partial class Profile
 
     public DateTime Birth { get; set; }
 
-    public string Username { get; set; } = null!;
+    public virtual ICollection<FavoriteMovie> FavoriteMovies { get; } = new List<FavoriteMovie>();
 }

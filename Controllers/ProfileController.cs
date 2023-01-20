@@ -1,7 +1,6 @@
 ﻿using LettercaixaAPI.DTOs;
 using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

@@ -15,6 +15,8 @@ public partial class LettercaixaContext : DbContext
     {
     }
 
+    public virtual DbSet<FavoriteMovie> FavoriteMovies { get; set; }
+
     public virtual DbSet<Profile> Profiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,35 +25,78 @@ public partial class LettercaixaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<FavoriteMovie>(entity =>
+        {
+            entity.HasKey(e => e.FavoriteMovies).HasName("PK__Favorite__0FB4E7986691C7BB");
+
+            entity.Property(e => e.MovieEight)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieFive)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieFour)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieNine)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieOne)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieSeven)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieSix)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieTen)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieThree)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.MovieTwo)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
+
+            entity.HasOne(d => d.Profile).WithMany(p => p.FavoriteMovies)
+                .HasForeignKey(d => d.ProfileId)
+                .HasConstraintName("FK__FavoriteM__Profi__3C69FB99");
+        });
+
         modelBuilder.Entity<Profile>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Perfil__3214EC0707D82065");
+            entity.HasKey(e => e.ProfileId).HasName("PK__Profile__290C888476916422");
 
-            entity.ToTable("Profile");
+            entity.ToTable("Profile", tb =>
+                {
+                    tb.HasTrigger("AddFavMoviesWhenProfileIsCreated");
+                    tb.HasTrigger("DelFavMoviesWhenProfileIsDel");
+                });
 
-            entity.HasIndex(e => e.Id, "UQ__Perfil__3214EC064A5FE4EF").IsUnique();
+            entity.HasIndex(e => e.Email, "UK_Profile_Email").IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__Perfil__A9D10534276B9353").IsUnique();
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
             entity.Property(e => e.Birth).HasColumnType("date");
             entity.Property(e => e.Email)
-                .HasMaxLength(200)
+                .HasMaxLength(220)
                 .IsUnicode(false);
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.LastName)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.PasswordHash)
                 .HasMaxLength(150)
                 .IsUnicode(false);
+            entity.Property(e => e.PasswordHash)
+                .HasMaxLength(220)
+                .IsUnicode(false);
             entity.Property(e => e.ProfilePicture)
-                .HasMaxLength(250)
+                .HasMaxLength(220)
                 .IsUnicode(false);
             entity.Property(e => e.Username)
-                .HasMaxLength(33)
+                .HasMaxLength(40)
                 .IsUnicode(false);
         });
 
