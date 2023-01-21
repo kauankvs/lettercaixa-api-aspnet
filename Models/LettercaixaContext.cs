@@ -29,6 +29,8 @@ public partial class LettercaixaContext : DbContext
         {
             entity.HasKey(e => e.FavoriteMovies).HasName("PK__Favorite__0FB4E7986691C7BB");
 
+            entity.HasIndex(e => e.ProfileId, "UK_Profile_Id").IsUnique();
+
             entity.Property(e => e.MovieEight)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -61,8 +63,9 @@ public partial class LettercaixaContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
 
-            entity.HasOne(d => d.Profile).WithMany(p => p.FavoriteMovies)
-                .HasForeignKey(d => d.ProfileId)
+            entity.HasOne(d => d.Profile).WithOne(p => p.FavoriteMovie)
+                .HasForeignKey<FavoriteMovie>(d => d.ProfileId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__FavoriteM__Profi__3C69FB99");
         });
 

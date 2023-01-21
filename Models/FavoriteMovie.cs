@@ -7,7 +7,7 @@ public partial class FavoriteMovie
 {
     public int FavoriteMovies { get; set; }
 
-    public int? ProfileId { get; set; }
+    public int ProfileId { get; set; }
 
     public string? MovieOne { get; set; }
 
@@ -29,5 +29,5 @@ public partial class FavoriteMovie
 
     public string? MovieTen { get; set; }
 
-    public virtual Profile? Profile { get; set; }
+    public virtual Profile Profile { get; set; } = null!;
 }
