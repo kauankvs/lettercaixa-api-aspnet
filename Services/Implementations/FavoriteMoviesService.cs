@@ -21,7 +21,8 @@ namespace LettercaixaAPI.Services.Implementations
                 {
                     fields.SetValue(favoriteMovie, movieId);
                     break;
-                }  
+                }
+                return new ConflictResult();
             }
             await _context.SaveChangesAsync();
             return new OkObjectResult(favoriteMovie);
