@@ -6,10 +6,10 @@ using System.Reflection;
 
 namespace LettercaixaAPI.Services.Implementations
 {
-    public class FavoriteMoviesService: IFavoriteMoviesService
+    public class FavoriteService: IFavoriteService
     {
         private readonly LettercaixaContext _context;
-        public FavoriteMoviesService(LettercaixaContext context) => _context = context;
+        public FavoriteService(LettercaixaContext context) => _context = context;
 
         public async Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync(string email, int movieId) 
         {

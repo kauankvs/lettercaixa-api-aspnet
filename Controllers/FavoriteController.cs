@@ -12,8 +12,8 @@ namespace LettercaixaAPI.Controllers
     [ApiController]
     public class FavoriteMoviesController : ControllerBase
     {
-        private readonly IFavoriteMoviesService _service;
-        public FavoriteMoviesController(IFavoriteMoviesService service) => _service = service;
+        private readonly IFavoriteService _service;
+        public FavoriteMoviesController(IFavoriteService service) => _service = service;
 
         [HttpPut]
         [Route("add")]

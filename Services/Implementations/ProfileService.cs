@@ -38,7 +38,6 @@ namespace LettercaixaAPI.Services.Implementations
                 Username = profileInput.Username,
             };
             
-
             await _context.Profiles.AddAsync(profile);
             await _context.SaveChangesAsync();
             return new OkObjectResult(profile);

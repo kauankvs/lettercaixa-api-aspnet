@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LettercaixaAPI.Models;
 
-public partial class FavoriteMovie
+public partial class Favorite
 {
     public int FavoriteMovies { get; set; }
 

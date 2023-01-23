@@ -15,7 +15,7 @@ public partial class LettercaixaContext : DbContext
     {
     }
 
-    public virtual DbSet<FavoriteMovie> FavoriteMovies { get; set; }
+    public virtual DbSet<Favorite> Favorites { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
 
@@ -27,16 +27,18 @@ public partial class LettercaixaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<FavoriteMovie>(entity =>
+        modelBuilder.Entity<Favorite>(entity =>
         {
             entity.HasKey(e => e.FavoriteMovies).HasName("PK__Favorite__0FB4E7986691C7BB");
+
+            entity.ToTable("Favorite");
 
             entity.HasIndex(e => e.ProfileId, "UK_Profile_Id").IsUnique();
 
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
 
-            entity.HasOne(d => d.Profile).WithOne(p => p.FavoriteMovie)
-                .HasForeignKey<FavoriteMovie>(d => d.ProfileId)
+            entity.HasOne(d => d.Profile).WithOne(p => p.Favorite)
+                .HasForeignKey<Favorite>(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__FavoriteM__Profi__3C69FB99");
         });
