@@ -5,7 +5,7 @@ namespace LettercaixaAPI.Models;
 
 public partial class Favorite
 {
-    public int FavoriteMovies { get; set; }
+    public int Favorite { get; set; }
 
     public int ProfileId { get; set; }
 

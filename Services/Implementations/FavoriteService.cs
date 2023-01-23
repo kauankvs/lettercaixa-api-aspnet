@@ -11,37 +11,37 @@ namespace LettercaixaAPI.Services.Implementations
         private readonly LettercaixaContext _context;
         public FavoriteService(LettercaixaContext context) => _context = context;
 
-        public async Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync(string email, int movieId) 
+        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
         {
-            FavoriteMovie favoriteMovie = await _context.FavoriteMovies.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
+            Favorite favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
 
-            foreach (FieldInfo fields in favoriteMovie.GetType().GetFields()) 
+            foreach (FieldInfo fields in favorite.GetType().GetFields()) 
             {
-                if (fields.GetValue(favoriteMovie) == null)
+                if (fields.GetValue(favorite) == null)
                 {
-                    fields.SetValue(favoriteMovie, movieId);
+                    fields.SetValue(favorite, movieId);
                     break;
                 } 
                 return new ConflictResult();
             }
             await _context.SaveChangesAsync();
-            return new OkObjectResult(favoriteMovie);
+            return new OkObjectResult(favorite);
         }
 
         public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId) 
         {
-            FavoriteMovie favoriteMovie = await _context.FavoriteMovies.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
+            Favorite favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
 
-            foreach (FieldInfo fields in favoriteMovie.GetType().GetFields())
+            foreach (FieldInfo fields in favorite.GetType().GetFields())
             {
-                if (fields.GetValue(favoriteMovie).Equals(movieId))
+                if (fields.GetValue(favorite).Equals(movieId))
                 {
-                    fields.SetValue(favoriteMovie, null);
+                    fields.SetValue(favorite, null);
                     break;
                 }
             }
             await _context.SaveChangesAsync();
-            return new OkObjectResult(favoriteMovie);
+            return new OkObjectResult(favorite);
         }
     }
 }

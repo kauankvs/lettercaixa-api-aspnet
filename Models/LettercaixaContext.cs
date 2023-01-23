@@ -29,7 +29,7 @@ public partial class LettercaixaContext : DbContext
     {
         modelBuilder.Entity<Favorite>(entity =>
         {
-            entity.HasKey(e => e.FavoriteMovies).HasName("PK__Favorite__0FB4E7986691C7BB");
+            entity.HasKey(e => e.Favorite).HasName("PK__Favorite__0FB4E7986691C7BB");
 
             entity.ToTable("Favorite");
 

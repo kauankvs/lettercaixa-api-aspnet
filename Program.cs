@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 builder.Services.AddDbContext<LettercaixaContext>();
