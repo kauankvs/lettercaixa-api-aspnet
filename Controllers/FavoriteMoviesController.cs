@@ -15,11 +15,13 @@ namespace LettercaixaAPI.Controllers
         private readonly IFavoriteMoviesService _service;
         public FavoriteMoviesController(IFavoriteMoviesService service) => _service = service;
 
+        [HttpPut]
         [Route("add")]
         [Authorize]
         public async Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync(int movieId)
             => await _service.AddMovieToFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
 
+        [HttpDelete]
         [Route("delete")]
         [Authorize]
         public async Task<ActionResult> RemoveMovieFromFavoritesAsync(int movieId)

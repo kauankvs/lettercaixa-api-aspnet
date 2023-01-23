@@ -17,6 +17,8 @@ public partial class LettercaixaContext : DbContext
 
     public virtual DbSet<FavoriteMovie> FavoriteMovies { get; set; }
 
+    public virtual DbSet<Post> Posts { get; set; }
+
     public virtual DbSet<Profile> Profiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,42 +33,33 @@ public partial class LettercaixaContext : DbContext
 
             entity.HasIndex(e => e.ProfileId, "UK_Profile_Id").IsUnique();
 
-            entity.Property(e => e.MovieEight)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieFive)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieFour)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieNine)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieOne)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieSeven)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieSix)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieTen)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieThree)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.MovieTwo)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
 
             entity.HasOne(d => d.Profile).WithOne(p => p.FavoriteMovie)
                 .HasForeignKey<FavoriteMovie>(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__FavoriteM__Profi__3C69FB99");
+        });
+
+        modelBuilder.Entity<Post>(entity =>
+        {
+            entity.HasKey(e => e.PostId).HasName("PK__Post__AA126038D0F00B54");
+
+            entity.ToTable("Post");
+
+            entity.Property(e => e.PostId).HasColumnName("PostID");
+            entity.Property(e => e.Comment)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.MovieId).HasColumnName("MovieID");
+            entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
+            entity.Property(e => e.Score).HasColumnType("numeric(18, 0)");
+
+            entity.HasOne(d => d.Profile).WithMany(p => p.Posts)
+                .HasForeignKey(d => d.ProfileId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Post");
         });
 
         modelBuilder.Entity<Profile>(entity =>

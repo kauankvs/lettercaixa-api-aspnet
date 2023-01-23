@@ -8,6 +8,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Scaffold-DbContext "Server=.\SQLExpress;Database=Lettercaixa;Trusted_Connection=True; TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<IAuthService, AuthService>();

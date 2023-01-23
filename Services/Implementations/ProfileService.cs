@@ -37,6 +37,7 @@ namespace LettercaixaAPI.Services.Implementations
                 Birth = profileInput.Birth,
                 Username = profileInput.Username,
             };
+            
 
             await _context.Profiles.AddAsync(profile);
             await _context.SaveChangesAsync();
