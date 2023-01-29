@@ -5,10 +5,6 @@ namespace LettercaixaAPI.Models;
 
 public partial class Favorite
 {
-    public int FavoriteId { get; set; }
-
-    public int ProfileId { get; set; }
-
     public int? MovieOne { get; set; }
 
     public int? MovieTwo { get; set; }
@@ -28,6 +24,10 @@ public partial class Favorite
     public int? MovieNine { get; set; }
 
     public int? MovieTen { get; set; }
+
+    public int ProfileId { get; set; }
+
+    public int FavoriteId { get; set; }
 
     public virtual Profile Profile { get; set; } = null!;
 }

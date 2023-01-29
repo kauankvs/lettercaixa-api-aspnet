@@ -52,6 +52,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("Lettercaixa");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -17,14 +17,14 @@ namespace LettercaixaAPI.Controllers
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<Profile>> RegisterProfileAsync(ProfileDTO profileInput)
+        public async Task<ActionResult<Profile>> RegisterProfileAsync([FromForm] ProfileDTO profileInput)
             => await _service.RegisterProfileAsync(profileInput);
 
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> LoginAsync(string password, string email)
-            => await _service.LoginAsync(password, email);
+        public async Task<ActionResult<string>> LoginAsync([FromForm] ProfileLogin profile)
+            => await _service.LoginAsync(profile.Password, profile.Email);
 
         [HttpDelete]
         [Route("delete")]

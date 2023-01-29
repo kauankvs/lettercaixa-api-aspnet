@@ -13,11 +13,13 @@ namespace LettercaixaAPI.Services.Implementations
     {
         private readonly LettercaixaContext _context;
         private readonly IAuthService _auth;
+        private readonly IFavoriteService _favoriteService;
 
-        public ProfileService(LettercaixaContext context, IAuthService auth)
+        public ProfileService(LettercaixaContext context, IAuthService auth, IFavoriteService favoriteService)
         {
             _context = context;
             _auth = auth;
+            _favoriteService = favoriteService;
         }
 
         public async Task<ActionResult<Profile>> RegisterProfileAsync(ProfileDTO profileInput)  
@@ -37,9 +39,9 @@ namespace LettercaixaAPI.Services.Implementations
                 Birth = profileInput.Birth,
                 Username = profileInput.Username,
             };
-            
             await _context.Profiles.AddAsync(profile);
             await _context.SaveChangesAsync();
+            await _favoriteService.CreateFavoriteAsync(profileInput.Username);
             return new OkObjectResult(profile);
         }
 

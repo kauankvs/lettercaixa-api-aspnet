@@ -22,25 +22,28 @@ public partial class LettercaixaContext : DbContext
     public virtual DbSet<Profile> Profiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=Lettercaixa;Trusted_Connection=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Favorite>(entity =>
         {
-            entity.HasKey(e => e.FavoriteId).HasName("PK__Favorite__0FB4E7986691C7BB");
+            entity.HasKey(e => e.FavoriteId).HasName("PK__Favorite__CE74FAF5489AAC38");
 
             entity.ToTable("Favorite");
 
-            entity.HasIndex(e => e.ProfileId, "UK_Profile_Id").IsUnique();
+            entity.HasIndex(e => e.ProfileId, "UQ__Favorite__290C888592A78C18").IsUnique();
 
+            entity.Property(e => e.FavoriteId)
+                .ValueGeneratedNever()
+                .HasColumnName("FavoriteID");
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
 
             entity.HasOne(d => d.Profile).WithOne(p => p.Favorite)
                 .HasForeignKey<Favorite>(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__FavoriteM__Profi__3C69FB99");
+                .HasConstraintName("FK__Favorite__Profil__628FA481");
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -68,13 +71,11 @@ public partial class LettercaixaContext : DbContext
         {
             entity.HasKey(e => e.ProfileId).HasName("PK__Profile__290C888476916422");
 
-            entity.ToTable("Profile", tb =>
-                {
-                    tb.HasTrigger("AddFavMoviesWhenProfileIsCreated");
-                    tb.HasTrigger("DelFavMoviesWhenProfileIsDel");
-                });
+            entity.ToTable("Profile");
 
             entity.HasIndex(e => e.Email, "UK_Profile_Email").IsUnique();
+
+            entity.HasIndex(e => e.Username, "UQ__Profile__536C85E44AF38398").IsUnique();
 
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
             entity.Property(e => e.Birth).HasColumnType("date");

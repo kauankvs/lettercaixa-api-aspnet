@@ -11,6 +11,19 @@ namespace LettercaixaAPI.Services.Implementations
         private readonly LettercaixaContext _context;
         public FavoriteService(LettercaixaContext context) => _context = context;
 
+        public async Task<ActionResult<Favorite>> CreateFavoriteAsync(string username)
+        {
+            Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Username.Equals(username));
+            Favorite favorite = new Favorite()
+            {
+                FavoriteId = profile.ProfileId,
+                ProfileId = profile.ProfileId,
+            };
+            await _context.Favorites.AddAsync(favorite);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(favorite);
+        }
+
         public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
         {
             Favorite favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
