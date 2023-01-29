@@ -40,7 +40,7 @@ builder.Services.AddAuthentication(auth =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Lettercaixa", policy => policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy(name: "Lettercaixa", policy => policy.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();

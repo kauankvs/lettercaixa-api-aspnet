@@ -1,5 +1,5 @@
 ﻿public static class Settings
 {
-    public static string Key = "2e6a-4144-9a9f-44a5508ba1f9";
+    public static string Key = "41762344-44a5-508ba1f9";
 }
 
