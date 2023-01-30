@@ -1,4 +1,6 @@
-﻿namespace LettercaixaAPI.DTOs
+﻿using LettercaixaAPI.Models;
+
+namespace LettercaixaAPI.DTOs
 {
     public class ProfileDisplay
     {

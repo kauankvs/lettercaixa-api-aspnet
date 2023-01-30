@@ -106,21 +106,11 @@ namespace LettercaixaAPI.Services.Implementations
             return new OkObjectResult(profile);
         }
 
-        public async Task<ActionResult<ProfileDisplay>> GetProfileAsync(string email)
+        public async Task<ActionResult<Profile>> GetProfileAsync(string email)
         {
             Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
-
-            ProfileDisplay profileDisplay = new ProfileDisplay()
-            { 
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                Email = email,
-                Birth = profile.Birth,
-                ProfilePicture = profile.ProfilePicture,
-                Username = profile.Username,
-            };
-
-            return new OkObjectResult(profileDisplay);
+            profile.PasswordHash = "********";
+            return new OkObjectResult(profile);
         }
 
         public async Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync(string name) 
