@@ -23,7 +23,7 @@ namespace LettercaixaAPI.Controllers
         [HttpDelete]
         [Route("delete")]
         [Authorize]
-        public async Task<ActionResult> RemoveCommentaryToMovieAsync(int movieId)
+        public async Task<ActionResult> RemoveCommentaryToMovieAsync([FromQuery] int movieId)
             => await _service.RemoveCommentaryToMovieAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
     }
 }
