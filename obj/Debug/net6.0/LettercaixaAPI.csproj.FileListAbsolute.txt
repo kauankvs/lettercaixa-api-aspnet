@@ -82,3 +82,16 @@ C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\obj\Debug\net6.
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\obj\Debug\net6.0\LettercaixaAPI.pdb
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\obj\Debug\net6.0\LettercaixaAPI.genruntimeconfig.cache
 C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\obj\Debug\net6.0\ref\LettercaixaAPI.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\AWSSDK.SecurityToken.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\DnsClient.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\MongoDB.Bson.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\MongoDB.Driver.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\MongoDB.Driver.Core.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\MongoDB.Libmongocrypt.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\SharpCompress.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\Snappier.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\ZstdSharp.dll
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\kauan\Downloads\projeto-c\LettercaixaAPI\LettercaixaAPI\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll

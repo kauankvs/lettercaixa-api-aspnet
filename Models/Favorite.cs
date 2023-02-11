@@ -12,7 +12,7 @@ namespace LettercaixaAPI.Models
         public int ProfileId { get; set; }
 
         [BsonRepresentation(BsonType.Array)]
-        public List<int> Movies { get; set; } = new List<int>();
+        public ICollection<int> Movies { get; } = new List<int>();
     }
 
 }

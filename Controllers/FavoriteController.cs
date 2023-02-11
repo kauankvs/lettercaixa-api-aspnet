@@ -12,7 +12,7 @@ namespace LettercaixaAPI.Controllers
     [ApiController]
     public class FavoriteController : ControllerBase
     {
-        /*private readonly IFavoriteService _service;
+        private readonly IFavoriteService _service;
         public FavoriteController(IFavoriteService service) => _service = service;
 
         [HttpPut]
@@ -25,6 +25,6 @@ namespace LettercaixaAPI.Controllers
         [Route("delete")]
         [Authorize]
         public async Task<ActionResult> RemoveMovieFromFavoritesAsync(int movieId)
-            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);*/
+            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
     }
 }

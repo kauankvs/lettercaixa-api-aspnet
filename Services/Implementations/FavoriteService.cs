@@ -16,17 +16,29 @@ namespace LettercaixaAPI.Services.Implementations
             _context = context;
         }
 
-        public async Task<ActionResult> AddMovieToFavoritesAsync(string email, int movieId) 
+        public async Task<ActionResult<Favorite>> CreateFavoriteToProfileAsync(string email)
+        {
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
+            Favorite favorite = new Favorite()
+            {
+                ProfileId = profile.ProfileId
+            };
+            await _collectionService.CreateDocAsync(favorite);
+            return new OkObjectResult(favorite);
+        }
+
+        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
         {
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
             await _collectionService.AddMovieFromDocAsync(profile.ProfileId, movieId);
-            return new OkResult();
+            Favorite favorite = await _collectionService.GetDocAsync(profile.ProfileId);
+            return new OkObjectResult(favorite);
         }
 
         public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId) 
         {
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            
+            await _collectionService.RemoveMovieFromDocAsync(profile.ProfileId, movieId);
             return new AcceptedResult();
         }
     }

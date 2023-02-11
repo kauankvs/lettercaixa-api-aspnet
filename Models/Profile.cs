@@ -21,5 +21,5 @@ public partial class Profile
 
     public DateTime Birth { get; set; }
 
-    public virtual ICollection<Post> Posts { get; } = new List<Post>();
+    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 }
