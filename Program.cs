@@ -14,6 +14,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
+builder.Services.AddTransient<IFavoritesCollectionService, FavoritesCollectionService>();
 builder.Services.AddDbContext<LettercaixaContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
