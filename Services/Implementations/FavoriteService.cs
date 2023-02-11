@@ -8,53 +8,26 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class FavoriteService: IFavoriteService
     {
-        /*private readonly LettercaixaContext _context;
-        public FavoriteService(LettercaixaContext context) => _context = context;
-
-        public async Task<ActionResult<Favorite>> CreateFavoriteAsync(string username)
-        {
-            Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Username.Equals(username));
-            Favorite favorite = new Favorite()
-            {
-                FavoriteId = profile.ProfileId,
-                ProfileId = profile.ProfileId,
-            };
-            await _context.Favorites.AddAsync(favorite);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult(favorite);
+        private readonly IFavoritesCollectionService _collectionService;
+        private readonly LettercaixaContext _context;
+        public FavoriteService(IFavoritesCollectionService collectionService, LettercaixaContext context) 
+        { 
+            _collectionService = collectionService;
+            _context = context;
         }
 
-        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
+        public async Task<ActionResult> AddMovieToFavoritesAsync(string email, int movieId) 
         {
-            Favorite favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
-
-            foreach (FieldInfo fields in favorite.GetType().GetFields()) 
-            {
-                if (fields.GetValue(favorite) == null)
-                {
-                    fields.SetValue(favorite, movieId);
-                    break;
-                } 
-                return new ConflictResult();
-            }
-            await _context.SaveChangesAsync();
-            return new OkObjectResult(favorite);
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
+            await _collectionService.AddMovieFromDocAsync(profile.ProfileId, movieId);
+            return new OkResult();
         }
 
         public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId) 
         {
-            Favorite favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Profile.Email.Equals(email));
-
-            foreach (FieldInfo fields in favorite.GetType().GetFields())
-            {
-                if (fields.GetValue(favorite).Equals(movieId))
-                {
-                    fields.SetValue(favorite, null);
-                    break;
-                }
-            }
-            await _context.SaveChangesAsync();
-            return new OkObjectResult(favorite);
-        }*/
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
+            
+            return new AcceptedResult();
+        }
     }
 }

@@ -24,9 +24,15 @@ namespace LettercaixaAPI.Services.Implementations
         public async Task UpdateDocAsync(int profileId, Favorite updatedFavorite)
             => await _favoritesCollection.ReplaceOneAsync(d => d.ProfileId == profileId, updatedFavorite);
 
-        public async Task AddMovieToDocAsync(int profileId, int movieId)
+        public async Task AddMovieFromDocAsync(int profileId, int movieId)
         {
             var addMovie = Builders<Favorite>.Update.Push(d => d.Movies, movieId);
+            await _favoritesCollection.FindOneAndUpdateAsync(d => d.ProfileId == profileId, addMovie);
+        }
+
+        public async Task RemoveMovieFromDocAsync(int profileId, int movieId)
+        {
+            var addMovie = Builders<Favorite>.Update.Pull(d => d.Movies, movieId);
             await _favoritesCollection.FindOneAndUpdateAsync(d => d.ProfileId == profileId, addMovie);
         }
 

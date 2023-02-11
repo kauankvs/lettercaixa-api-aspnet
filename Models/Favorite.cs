@@ -8,7 +8,11 @@ namespace LettercaixaAPI.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
+
         public int ProfileId { get; set; }
-        public int[] Movies { get; set; }
+
+        [BsonRepresentation(BsonType.Array)]
+        public List<int> Movies { get; set; } = new List<int>();
     }
+
 }
