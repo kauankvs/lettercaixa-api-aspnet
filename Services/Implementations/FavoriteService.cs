@@ -8,7 +8,7 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class FavoriteService: IFavoriteService
     {
-        private readonly LettercaixaContext _context;
+        /*private readonly LettercaixaContext _context;
         public FavoriteService(LettercaixaContext context) => _context = context;
 
         public async Task<ActionResult<Favorite>> CreateFavoriteAsync(string username)
@@ -55,6 +55,6 @@ namespace LettercaixaAPI.Services.Implementations
             }
             await _context.SaveChangesAsync();
             return new OkObjectResult(favorite);
-        }
+        }*/
     }
 }
