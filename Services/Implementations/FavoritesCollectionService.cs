@@ -5,14 +5,14 @@ using MongoDB.Driver;
 
 namespace LettercaixaAPI.Services.Implementations
 {
-    public class FavoritesCollectionService: IFavoritesCollectionService
+    public class FavoritesCollectionService
     {
         private readonly IMongoCollection<Favorite> _favoritesCollection;
         public FavoritesCollectionService(IOptions<LettercaixaDatabaseSettings> lettercaixaSettings) 
         {
-            IMongoClient client = new MongoClient(lettercaixaSettings.Value.ConnectionString);
+            MongoClient client = new MongoClient(lettercaixaSettings.Value.ConnectionString);
             IMongoDatabase database = client.GetDatabase(lettercaixaSettings.Value.DatabaseName);
-            IMongoCollection<Favorite> collection = database.GetCollection<Favorite>(lettercaixaSettings.Value.CollectionName);
+            _favoritesCollection = database.GetCollection<Favorite>(lettercaixaSettings.Value.CollectionName);
         }
 
         public async Task<Favorite?> GetDocAsync(int profileId)

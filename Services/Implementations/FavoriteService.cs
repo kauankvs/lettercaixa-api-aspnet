@@ -8,9 +8,9 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class FavoriteService: IFavoriteService
     {
-        private readonly IFavoritesCollectionService _collectionService;
+        private readonly FavoritesCollectionService _collectionService;
         private readonly LettercaixaContext _context;
-        public FavoriteService(IFavoritesCollectionService collectionService, LettercaixaContext context) 
+        public FavoriteService(FavoritesCollectionService collectionService, LettercaixaContext context) 
         { 
             _collectionService = collectionService;
             _context = context;
