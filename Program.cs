@@ -9,12 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Scaffold-DbContext "Server=.\SQLExpress;Database=Lettercaixa;Trusted_Connection=True; TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
-builder.Services.AddSingleton<FavoritesCollectionService>();
+builder.Services.AddSingleton<IFavoritesCollectionService, FavoritesCollectionService>();
 builder.Services.AddDbContext<LettercaixaContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

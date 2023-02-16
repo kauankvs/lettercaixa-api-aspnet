@@ -1,4 +1,5 @@
-﻿using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.DTOs;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +12,15 @@ namespace LettercaixaAPI.Services.Implementations
         private readonly LettercaixaContext _context;
         public PostService(LettercaixaContext context) => _context = context;
 
-        public async Task<ActionResult<Post>> AddCommentaryToMovieAsync(string email, int movieId, string comment, int score) 
+        public async Task<ActionResult<Post>> AddCommentaryToMovieAsync(string email, PostDTO postInput) 
         {
             Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
             Post post = new Post()
             {
                 ProfileId = profile.ProfileId,
-                MovieId = movieId,
-                Comment = comment,
-                Score = score,
+                MovieId = postInput.MovieId,
+                Comment = postInput.Comment,
+                Score = postInput.Score,
             };
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();

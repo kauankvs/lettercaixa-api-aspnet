@@ -8,9 +8,9 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class FavoriteService: IFavoriteService
     {
-        private readonly FavoritesCollectionService _collectionService;
+        private readonly IFavoritesCollectionService _collectionService;
         private readonly LettercaixaContext _context;
-        public FavoriteService(FavoritesCollectionService collectionService, LettercaixaContext context) 
+        public FavoriteService(IFavoritesCollectionService collectionService, LettercaixaContext context) 
         { 
             _collectionService = collectionService;
             _context = context;
@@ -21,7 +21,8 @@ namespace LettercaixaAPI.Services.Implementations
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
             Favorite favorite = new Favorite()
             {
-                ProfileId = profile.ProfileId
+                ProfileId = profile.ProfileId,
+                Movies = new List<int>(),
             };
             await _collectionService.CreateDocAsync(favorite);
             return new OkObjectResult(favorite);

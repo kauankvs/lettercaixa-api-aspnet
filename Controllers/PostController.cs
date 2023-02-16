@@ -1,4 +1,5 @@
-﻿using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.DTOs;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,13 @@ namespace LettercaixaAPI.Controllers
         [HttpPost]
         [Route("add")]
         [Authorize]
-        public async Task<ActionResult<Post>> AddCommentaryToMovieAsync(int movieId, string comment, int score)
-            => await _service.AddCommentaryToMovieAsync(User.FindFirstValue(ClaimTypes.Email), movieId, comment, score);
+        public async Task<ActionResult<Post>> AddCommentaryToMovieAsync([FromBody] PostDTO postInput) 
+            => await _service.AddCommentaryToMovieAsync(User.FindFirstValue(ClaimTypes.Email), postInput);
 
         [HttpDelete]
         [Route("delete")]
         [Authorize]
-        public async Task<ActionResult> RemoveCommentaryToMovieAsync([FromQuery] int movieId)
+        public async Task<ActionResult> RemoveCommentaryToMovieAsync([FromBody] int movieId)
             => await _service.RemoveCommentaryToMovieAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
     }
 }
