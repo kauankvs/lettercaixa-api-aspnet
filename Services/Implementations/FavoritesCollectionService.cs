@@ -10,9 +10,11 @@ namespace LettercaixaAPI.Services.Implementations
         private readonly IMongoCollection<Favorite> _favoritesCollection;
         public FavoritesCollectionService(IOptions<LettercaixaDatabaseSettings> lettercaixaSettings) 
         {
-            MongoClient client = new MongoClient(lettercaixaSettings.Value.ConnectionString);
-            IMongoDatabase database = client.GetDatabase(lettercaixaSettings.Value.DatabaseName);
-            _favoritesCollection = database.GetCollection<Favorite>(lettercaixaSettings.Value.CollectionName);
+            var mongoUrl = new MongoUrl(Settings.MongoUrl);
+            var settings = MongoClientSettings.FromUrl(mongoUrl);
+            var client = new MongoClient(settings);
+            var database = client.GetDatabase("Lettercaixa");
+            _favoritesCollection = database.GetCollection<Favorite>("Favorites");
         }
 
         public async Task<Favorite?> GetDocAsync(int profileId)
@@ -26,16 +28,16 @@ namespace LettercaixaAPI.Services.Implementations
 
         public async Task AddMovieFromDocAsync(int profileId, int movieId)
         {
-            Favorite updatedFavorite = await _favoritesCollection.Find(d => d.ProfileId == profileId).FirstOrDefaultAsync();
-            updatedFavorite.Movies.Add(movieId);
-            await _favoritesCollection.FindOneAndReplaceAsync(d => d.ProfileId == profileId, updatedFavorite);
+            var filter = Builders<Favorite>.Filter.Eq(f => f.ProfileId, profileId);
+            var update = Builders<Favorite>.Update.Push(f => f.Movies, movieId);
+            await _favoritesCollection.UpdateOneAsync(filter, update);   
         }
 
         public async Task RemoveMovieFromDocAsync(int profileId, int movieId)
         {
-            Favorite updatedFavorite = await _favoritesCollection.Find(d => d.ProfileId == profileId).FirstOrDefaultAsync();
-            updatedFavorite.Movies.Remove(movieId);
-            await _favoritesCollection.FindOneAndReplaceAsync(d => d.ProfileId == profileId, updatedFavorite);
+            var filter = Builders<Favorite>.Filter.Eq(f => f.ProfileId, profileId);
+            var update = Builders<Favorite>.Update.Pull(f => f.Movies, movieId);
+            await _favoritesCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task DeleteDocAsync(int profileId)
