@@ -67,6 +67,7 @@ namespace LettercaixaAPI.Services.Implementations
             if(passwordIsCorrect.Equals(false))
                 return new BadRequestObjectResult(password);
 
+            await _favoriteService.DeleteDocAsync(profile.ProfileId); 
             _context.Profiles.Remove(profile);
             await _context.SaveChangesAsync();
             return new AcceptedResult();

@@ -16,7 +16,7 @@ namespace LettercaixaAPI.Services.Implementations
             _context = context;
         }
 
-        public async Task<ActionResult<Favorite>> CreateFavoriteToProfileAsync(string email)
+        public async Task<Favorite> CreateFavoriteToProfileAsync(string email)
         {
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
             Favorite favorite = new Favorite()
@@ -25,7 +25,7 @@ namespace LettercaixaAPI.Services.Implementations
                 Movies = new List<int>(),
             };
             await _collectionService.CreateDocAsync(favorite);
-            return new OkObjectResult(favorite);
+            return favorite;
         }
 
         public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
@@ -42,5 +42,15 @@ namespace LettercaixaAPI.Services.Implementations
             await _collectionService.RemoveMovieFromDocAsync(profile.ProfileId, movieId);
             return new AcceptedResult();
         }
+
+        public async Task<ActionResult<Favorite>> GetFavoriteMoviesFromProfileAsync(string profileEmail)
+        {
+            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(profileEmail));
+            Favorite profileFavoriteMovies = await _collectionService.GetDocAsync(profile.ProfileId);
+            return new OkObjectResult(profileFavoriteMovies);
+        }
+
+        public async Task DeleteDocAsync(int profileId)
+            => await _collectionService.DeleteDocAsync(profileId);
     }
 }
