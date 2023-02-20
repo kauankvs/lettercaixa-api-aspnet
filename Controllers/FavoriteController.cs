@@ -1,4 +1,5 @@
-﻿using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.DTOs;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Implementations;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -16,16 +17,16 @@ namespace LettercaixaAPI.Controllers
         public FavoriteController(IFavoriteService service) => _service = service;
 
         [HttpPost]
-        [Route("add/{movieId}")]
+        [Route("add")]
         [Authorize]
-        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync([FromRoute] int movieId)
-            => await _service.AddMovieToFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
+        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync([FromBody] Movie movie)
+            => await _service.AddMovieToFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movie);
 
         [HttpDelete]
-        [Route("delete/{movieId}")]
+        [Route("delete")]
         [Authorize]
-        public async Task<ActionResult> RemoveMovieFromFavoritesAsync([FromRoute] int movieId)
-            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
+        public async Task<ActionResult> RemoveMovieFromFavoritesAsync([FromBody] Movie movie)
+            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movie);
 
         [HttpGet]
         [Route("profile")]

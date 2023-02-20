@@ -1,4 +1,5 @@
-﻿using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.DTOs;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,24 +23,24 @@ namespace LettercaixaAPI.Services.Implementations
             Favorite favorite = new Favorite()
             {
                 ProfileId = profile.ProfileId,
-                Movies = new List<int>(),
+                Movies = new List<Movie>(),
             };
             await _collectionService.CreateDocAsync(favorite);
             return favorite;
         }
 
-        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, int movieId) 
+        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, Movie movie) 
         {
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            await _collectionService.AddMovieFromDocAsync(profile.ProfileId, movieId);
+            await _collectionService.AddMovieFromDocAsync(profile.ProfileId, movie);
             Favorite favorite = await _collectionService.GetDocAsync(profile.ProfileId);
             return new OkObjectResult(favorite);
         }
 
-        public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId) 
+        public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, Movie movie) 
         {
             Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            await _collectionService.RemoveMovieFromDocAsync(profile.ProfileId, movieId);
+            await _collectionService.RemoveMovieFromDocAsync(profile.ProfileId, movie);
             return new AcceptedResult();
         }
 

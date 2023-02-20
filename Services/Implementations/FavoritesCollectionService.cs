@@ -1,4 +1,5 @@
-﻿using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.DTOs;
+using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -26,17 +27,17 @@ namespace LettercaixaAPI.Services.Implementations
         public async Task UpdateDocAsync(int profileId, Favorite updatedFavorite)
             => await _favoritesCollection.FindOneAndReplaceAsync(d => d.ProfileId == profileId, updatedFavorite);
 
-        public async Task AddMovieFromDocAsync(int profileId, int movieId)
+        public async Task AddMovieFromDocAsync(int profileId, Movie movie)
         {
             var filter = Builders<Favorite>.Filter.Eq(f => f.ProfileId, profileId);
-            var update = Builders<Favorite>.Update.Push(f => f.Movies, movieId);
+            var update = Builders<Favorite>.Update.Push(f => f.Movies, movie);
             await _favoritesCollection.UpdateOneAsync(filter, update);   
         }
 
-        public async Task RemoveMovieFromDocAsync(int profileId, int movieId)
+        public async Task RemoveMovieFromDocAsync(int profileId, Movie movie)
         {
             var filter = Builders<Favorite>.Filter.Eq(f => f.ProfileId, profileId);
-            var update = Builders<Favorite>.Update.Pull(f => f.Movies, movieId);
+            var update = Builders<Favorite>.Update.Pull(f => f.Movies, movie);
             await _favoritesCollection.UpdateOneAsync(filter, update);
         }
 
