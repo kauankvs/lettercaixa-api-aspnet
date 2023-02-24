@@ -1,5 +1,4 @@
-﻿using LettercaixaAPI.DTOs;
-using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.Models;
 using MongoDB.Driver;
 
 namespace LettercaixaAPI.Services.Interfaces

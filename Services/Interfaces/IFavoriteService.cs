@@ -1,5 +1,4 @@
-﻿using LettercaixaAPI.DTOs;
-using LettercaixaAPI.Models;
+﻿using LettercaixaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LettercaixaAPI.Services.Interfaces
