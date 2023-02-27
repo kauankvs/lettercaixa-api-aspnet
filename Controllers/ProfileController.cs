@@ -29,13 +29,13 @@ namespace LettercaixaAPI.Controllers
         [HttpDelete]
         [Route("delete")]
         [Authorize]
-        public async Task<ActionResult> DeleteProfileAsync(string password)
+        public async Task<ActionResult> DeleteProfileAsync([FromForm] string password)
             => await _service.DeleteProfileAsync(User.FindFirstValue(ClaimTypes.Email), password);
 
         [HttpPut]
         [Route("update/email")]
         [Authorize]
-        public async Task<ActionResult<Profile>> UpdateProfileEmailAsync(string newEmail)
+        public async Task<ActionResult<Profile>> UpdateProfileEmailAsync([FromForm] string newEmail)
             => await _service.UpdateProfileEmailAsync(User.FindFirstValue(ClaimTypes.Email), newEmail);
 
         [HttpPut]
