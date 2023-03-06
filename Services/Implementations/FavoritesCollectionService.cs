@@ -12,7 +12,6 @@ namespace LettercaixaAPI.Services.Implementations
         {
             var mongoUrl = new MongoUrl(Settings.MongoUrl);
             var settings = MongoClientSettings.FromUrl(mongoUrl);
-            settings.ServerSelectionTimeout = TimeSpan.FromSeconds(60);
             var client = new MongoClient(settings);
             var database = client.GetDatabase("Lettercaixa");
             _favoritesCollection = database.GetCollection<Favorite>("Favorites"); 
