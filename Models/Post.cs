@@ -11,8 +11,6 @@ public partial class Post
 
     public string? Comment { get; set; }
 
-    public decimal Score { get; set; }
-
     public int PostId { get; set; }
 
     public virtual Profile Profile { get; set; } = null!;

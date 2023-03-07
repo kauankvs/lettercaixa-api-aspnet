@@ -38,7 +38,6 @@ public partial class LettercaixaContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
             entity.Property(e => e.ProfileId).HasColumnName("ProfileID");
-            entity.Property(e => e.Score).HasColumnType("numeric(18, 0)");
 
             entity.HasOne(d => d.Profile).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.ProfileId)
