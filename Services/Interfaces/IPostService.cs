@@ -8,5 +8,6 @@ namespace LettercaixaAPI.Services.Interfaces
     {
         public Task<ActionResult<Post>> AddCommentaryToMovieAsync(string email, PostDTO postInput);
         public Task<ActionResult> RemoveCommentaryToMovieAsync(string email, int movieId);
+        public Task<ActionResult<List<Post>>> getMovieComments(int movieId);
     }
 }

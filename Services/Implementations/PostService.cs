@@ -20,7 +20,6 @@ namespace LettercaixaAPI.Services.Implementations
                 ProfileId = profile.ProfileId,
                 MovieId = postInput.MovieId,
                 Comment = postInput.Comment,
-                Score = postInput.Score,
             };
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
@@ -36,6 +35,12 @@ namespace LettercaixaAPI.Services.Implementations
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return new AcceptedResult();
+        }
+
+        public async Task<ActionResult<List<Post>>> getMovieComments(int movieId) 
+        {
+            List<Post> comments = await _context.Posts.AsNoTracking().Where(p => p.MovieId == movieId).ToListAsync();
+            return new OkObjectResult(comments);
         }
     }
 }

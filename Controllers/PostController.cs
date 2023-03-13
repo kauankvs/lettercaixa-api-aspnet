@@ -26,5 +26,11 @@ namespace LettercaixaAPI.Controllers
         [Authorize]
         public async Task<ActionResult> RemoveCommentaryToMovieAsync([FromBody] int movieId)
             => await _service.RemoveCommentaryToMovieAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
+
+        [HttpGet]
+        [Route("{movieId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<Post>>> getMovieComments([FromRoute] int movieId)
+            => await _service.getMovieComments(movieId);
     }
 }
