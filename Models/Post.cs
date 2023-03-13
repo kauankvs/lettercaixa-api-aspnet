@@ -9,7 +9,7 @@ public partial class Post
 
     public int MovieId { get; set; }
 
-    public string? Comment { get; set; }
+    public string Comment { get; set; } = null!;
 
     public int PostId { get; set; }
 

@@ -40,6 +40,9 @@ namespace LettercaixaAPI.Services.Implementations
         public async Task<ActionResult<List<Post>>> getMovieComments(int movieId) 
         {
             List<Post> comments = await _context.Posts.AsNoTracking().Where(p => p.MovieId == movieId).ToListAsync();
+            if(comments == null)
+                return new NoContentResult();
+
             return new OkObjectResult(comments);
         }
     }
