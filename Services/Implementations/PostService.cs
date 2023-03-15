@@ -37,13 +37,35 @@ namespace LettercaixaAPI.Services.Implementations
             return new AcceptedResult();
         }
 
-        public async Task<ActionResult<List<Post>>> getMovieComments(int movieId) 
+        public async Task<ActionResult<List<PostDisplay>>> GetMovieComments(int movieId) 
         {
-            List<Post> comments = await _context.Posts.AsNoTracking().Where(p => p.MovieId == movieId).ToListAsync();
-            if(comments == null)
+            List<Post>? comments = await _context.Posts.AsNoTracking().Where(p => p.MovieId == movieId).ToListAsync();
+            if (comments == null)
                 return new NoContentResult();
 
-            return new OkObjectResult(comments);
+            List<PostDisplay> commentsDisplay = TransformPostsForDisplayAsync(comments).Result;
+            return new OkObjectResult(commentsDisplay);
         }
+
+        public async Task<List<PostDisplay>> TransformPostsForDisplayAsync(List<Post> posts)
+        {
+            List<PostDisplay> postsDisplay = new List<PostDisplay>();
+            foreach (Post post in posts)
+            {
+                Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.ProfileId == post.ProfileId);
+                postsDisplay.Add(new PostDisplay
+                {
+                    ProfileId = post.ProfileId,
+                    MovieId = post.MovieId,
+                    Comment = post.Comment,
+                    Username = profile.Username,
+                    FullName = profile.FirstName + " " + profile.LastName,
+                    ProfilePicture = profile.ProfilePicture,
+                });
+            }
+            return postsDisplay;
+        }
+        
+      
     }
 }

@@ -127,9 +127,9 @@ namespace LettercaixaAPI.Services.Implementations
             {
                 usersProfile.Add(new ProfileDisplay()
                 {
+                    ProfileId = profile.ProfileId,
                     FirstName = profile.FirstName,
                     LastName = profile.LastName,
-                    Birth = profile.Birth,
                     Username = profile.Username,
                     ProfilePicture = profile.ProfilePicture,
                 });
