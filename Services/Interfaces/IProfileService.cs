@@ -15,5 +15,6 @@ namespace LettercaixaAPI.Services.Interfaces
         public Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string email, string pictureUrl);
         public Task<ActionResult<Profile>> GetProfileAsync(string email);
         public Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync(string name);
+        public Task<ActionResult<ProfileDisplay>> GetProfileById(int profileId);
     }
 }

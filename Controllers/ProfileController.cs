@@ -61,5 +61,11 @@ namespace LettercaixaAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync([FromRoute] string name)
             => await _service.GetProfilesByNameAsync(name);
+
+        [HttpGet]
+        [Route("{profileId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ProfileDisplay>> GetProfileById([FromRoute] int profileId)
+            => await _service.GetProfileById(profileId);
     }
 }

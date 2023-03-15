@@ -131,9 +131,19 @@ namespace LettercaixaAPI.Services.Implementations
                     LastName = profile.LastName,
                     Birth = profile.Birth,
                     Username = profile.Username,
+                    ProfilePicture = profile.ProfilePicture,
                 });
             }
             return new OkObjectResult(usersProfile);
+        }
+
+        public async Task<ActionResult<ProfileDisplay>> GetProfileById(int profileId)
+        {
+            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.ProfileId == profileId);
+            if(profile == null)
+                return new NoContentResult();
+
+            return new OkObjectResult(profile);
         }
     } 
 }

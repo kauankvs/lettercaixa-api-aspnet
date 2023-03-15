@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tjDU6jqWdn7NKRIeaGmYgP2yUA7Ndc3tZ0KwUBxib8oLntJ9nfgdBBRPcSfjkY32ws3HrIpsIFhuzHhYpcgP1g==",
+  "dgSpecHash": "aQFjcEyXCZpRhKWONg4tX6hBU/ic253t5pXai5Efz3EH86GyBPlywHwdohcrX+fwwsZshv4laCXKQFld9YdvqQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\kauan\\Downloads\\projeto-c\\LettercaixaAPI\\LettercaixaAPI\\LettercaixaAPI.csproj",
   "expectedPackageFiles": [
@@ -48,7 +48,6 @@
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
-    "C:\\Users\\kauan\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\mongodb.bson\\2.19.0\\mongodb.bson.2.19.0.nupkg.sha512",

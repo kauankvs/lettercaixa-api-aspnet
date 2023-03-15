@@ -8,7 +8,7 @@ namespace LettercaixaAPI.DTOs
         public string LastName { get; set; } = null!;
         public string? Email { get; set; } = null!;
         public string? ProfilePicture { get; set; }
-        public DateTime Birth { get; set; }
+        public DateTime? Birth { get; set; }
         public string Username { get; set; } = null!;
     }
 }
