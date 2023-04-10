@@ -54,15 +54,14 @@ namespace LettercaixaAPI.Services.Implementations
             bool passwordIsCorrect = await _auth.VerifyIfPasswordIsEqualAsync(email, password);
             if (passwordIsCorrect.Equals(false))
                 return new BadRequestObjectResult(password);
-
+           
             string token = await _auth.CreateTokenAsync(email);
-            return new OkObjectResult(token);
+            return new  OkObjectResult(token);
         }
 
         public async Task<ActionResult> DeleteProfileAsync(string email, string password)
         {
             Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
-
             bool passwordIsCorrect = BC.Verify(password, profile.PasswordHash);
             if(passwordIsCorrect.Equals(false))
                 return new BadRequestObjectResult(password);

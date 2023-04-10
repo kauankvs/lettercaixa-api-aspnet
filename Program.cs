@@ -2,6 +2,8 @@ using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Implementations;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -41,7 +43,7 @@ builder.Services.AddAuthentication(auth =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Lettercaixa", policy => policy.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy(name: "Lettercaixa", policy => policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowCredentials().AllowAnyHeader());
 });
 
 var app = builder.Build();
