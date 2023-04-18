@@ -18,19 +18,19 @@ namespace LettercaixaAPI.Controllers
         [HttpPost]
         [Route("add")]
         [Authorize]
-        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync([FromBody] Movie movie)
-            => await _service.AddMovieToFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movie);
+        public async Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync([FromBody] int movieId)
+            => await _service.AddMovieToFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
 
         [HttpDelete]
         [Route("delete")]
         [Authorize]
-        public async Task<ActionResult> RemoveMovieFromFavoritesAsync([FromBody] Movie movie)
-            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movie);
+        public async Task<ActionResult> RemoveMovieFromFavoritesAsync([FromBody] int movieId)
+            => await _service.RemoveMovieFromFavoritesAsync(User.FindFirstValue(ClaimTypes.Email), movieId);
 
         [HttpGet]
         [Route("profile")]
         [Authorize]
-        public async Task<ActionResult<Favorite>> GetFavoriteMoviesFromProfileAsync()
+        public async Task<ActionResult<List<FavoriteMovie>>> GetFavoriteMoviesFromProfileAsync()
             => await _service.GetFavoriteMoviesFromProfileAsync(User.FindFirstValue(ClaimTypes.Email));
     }
 }

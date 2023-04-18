@@ -13,13 +13,11 @@ namespace LettercaixaAPI.Services.Implementations
     {
         private readonly LettercaixaContext _context;
         private readonly IAuthService _auth;
-        private readonly IFavoriteService _favoriteService;
 
-        public ProfileService(LettercaixaContext context, IAuthService auth, IFavoriteService favoriteService)
+        public ProfileService(LettercaixaContext context, IAuthService auth)
         {
             _context = context;
             _auth = auth;
-            _favoriteService = favoriteService;
         }
 
         public async Task<ActionResult<Profile>> RegisterProfileAsync(ProfileDTO profileInput)  
@@ -115,6 +113,7 @@ namespace LettercaixaAPI.Services.Implementations
             List<Profile> profiles = await _context.Profiles.AsNoTracking()
                 .Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name) || p.Username.Contains(name))
                 .ToListAsync();
+
             if (profiles.Equals(null))
                 return new NoContentResult();
 

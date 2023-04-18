@@ -30,7 +30,7 @@ namespace LettercaixaAPI.Controllers
         [HttpGet]
         [Route("{movieId}")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<PostDisplay>>> GetMovieComments([FromRoute] int movieId)
+        public async Task<ActionResult<List<Post>>> GetMovieComments([FromRoute] int movieId)
             => await _service.GetMovieComments(movieId);
     }
 }

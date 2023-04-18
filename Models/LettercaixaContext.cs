@@ -29,16 +29,14 @@ public partial class LettercaixaContext : DbContext
     {
         modelBuilder.Entity<FavoriteMovie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Favorite__3214EC07FBADB1D5");
+            entity.HasKey(e => e.Id).HasName("PK__Favorite__3214EC07E4ABC6A6");
 
             entity.ToTable("FavoriteMovie");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Profile).WithMany(p => p.FavoriteMovies)
                 .HasForeignKey(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__FavoriteM__Profi__02FC7413");
+                .HasConstraintName("FK__FavoriteM__Profi__05D8E0BE");
         });
 
         modelBuilder.Entity<Post>(entity =>

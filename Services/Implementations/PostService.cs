@@ -14,7 +14,10 @@ namespace LettercaixaAPI.Services.Implementations
 
         public async Task<ActionResult<Post>> AddCommentaryToMovieAsync(string email, PostDTO postInput) 
         {
-            Profile profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
+            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(email));
+            if (profile == null)
+                return new BadRequestResult();
+
             Post post = new Post()
             {
                 ProfileId = profile.ProfileId,
@@ -37,35 +40,13 @@ namespace LettercaixaAPI.Services.Implementations
             return new AcceptedResult();
         }
 
-        public async Task<ActionResult<List<PostDisplay>>> GetMovieComments(int movieId) 
+        public async Task<ActionResult<List<Post>>> GetMovieComments(int movieId) 
         {
-            List<Post>? comments = await _context.Posts.AsNoTracking().Where(p => p.MovieId == movieId).ToListAsync();
+            List<Post>? comments = await _context.Posts.AsNoTracking().Include(c => c.Profile).Where(p => p.MovieId == movieId).ToListAsync();
             if (comments == null)
                 return new NoContentResult();
 
-            List<PostDisplay> commentsDisplay = TransformPostsForDisplayAsync(comments).Result;
-            return new OkObjectResult(commentsDisplay);
+            return new OkObjectResult(comments);
         }
-
-        public async Task<List<PostDisplay>> TransformPostsForDisplayAsync(List<Post> posts)
-        {
-            List<PostDisplay> postsDisplay = new List<PostDisplay>();
-            foreach (Post post in posts)
-            {
-                Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.ProfileId == post.ProfileId);
-                postsDisplay.Add(new PostDisplay
-                {
-                    ProfileId = post.ProfileId,
-                    MovieId = post.MovieId,
-                    Comment = post.Comment,
-                    Username = profile.Username,
-                    FullName = profile.FirstName + " " + profile.LastName,
-                    ProfilePicture = profile.ProfilePicture,
-                });
-            }
-            return postsDisplay;
-        }
-        
-      
     }
 }

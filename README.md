@@ -6,7 +6,7 @@ Lettercaixa is a web application for users to navigate throught a vast catalog o
 
 
 This `asp.net core` is a web api that exposes multiple endpoints that receive user http requests and sends back responses to the angular client, related to accounts, movies and posts.
-It connects with a `SQL Server` and `MongoDB` databases to persist data;
+It connects with a `SQL Server` database to persist data, with a Database First Approach. The DB constains three tables with: Profile, Post and FavoriteMovie;
 
 It has three major parts in the api that exposes this endpoints: 
 - Profile: log in, creating, recieving, removing and updating profile fields (full crud).

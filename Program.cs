@@ -2,8 +2,6 @@ using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Implementations;
 using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
