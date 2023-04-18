@@ -41,7 +41,6 @@ namespace LettercaixaAPI.Services.Implementations
             };
             await _context.Profiles.AddAsync(profile);
             await _context.SaveChangesAsync();
-            await _favoriteService.CreateFavoriteToProfileAsync(profile.Email);
             return new OkObjectResult(profile);
         }
 
@@ -65,8 +64,6 @@ namespace LettercaixaAPI.Services.Implementations
             bool passwordIsCorrect = BC.Verify(password, profile.PasswordHash);
             if(passwordIsCorrect.Equals(false))
                 return new BadRequestObjectResult(password);
-
-            await _favoriteService.DeleteDocAsync(profile.ProfileId); 
             _context.Profiles.Remove(profile);
             await _context.SaveChangesAsync();
             return new AcceptedResult();

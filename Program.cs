@@ -9,19 +9,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Scaffold-DbContext "Server=.\SQLExpress;Database=Lettercaixa;Trusted_Connection=True; TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
-
 builder.Services.AddControllers();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
-builder.Services.AddSingleton<IFavoritesCollectionService, FavoritesCollectionService>();
 builder.Services.AddDbContext<LettercaixaContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.Configure<LettercaixaDatabaseSettings>(builder.Configuration.GetSection("LettercaixaDatabase"));
 
 builder.Services.AddAuthentication(auth =>
 {

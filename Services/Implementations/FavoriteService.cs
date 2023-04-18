@@ -3,54 +3,54 @@ using LettercaixaAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Security.Cryptography.Xml;
 
 namespace LettercaixaAPI.Services.Implementations
 {
     public class FavoriteService: IFavoriteService
     {
-        private readonly IFavoritesCollectionService _collectionService;
         private readonly LettercaixaContext _context;
-        public FavoriteService(IFavoritesCollectionService collectionService, LettercaixaContext context) 
-        { 
-            _collectionService = collectionService;
-            _context = context;
-        }
+        public FavoriteService(LettercaixaContext context) 
+            => _context = context;
+        
 
-        public async Task<Favorite> CreateFavoriteToProfileAsync(string email)
+        public async Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync(string email, int movieId) 
         {
-            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            Favorite favorite = new Favorite()
+            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.Email == email);
+            if (profile == null)
+                return new BadRequestResult();
+
+            FavoriteMovie favorite = new()
             {
                 ProfileId = profile.ProfileId,
-                Movies = new List<Movie>(),
+                MovieId = movieId,
             };
-            await _collectionService.CreateDocAsync(favorite);
-            return favorite;
-        }
-
-        public async Task<ActionResult<Favorite>> AddMovieToFavoritesAsync(string email, Movie movie) 
-        {
-            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            await _collectionService.AddMovieFromDocAsync(profile.ProfileId, movie);
-            Favorite favorite = await _collectionService.GetDocAsync(profile.ProfileId);
+            await _context.FavoriteMovies.AddAsync(favorite);
+            await _context.SaveChangesAsync();
             return new OkObjectResult(favorite);
         }
 
-        public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, Movie movie) 
+        public async Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId) 
         {
-            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email));
-            await _collectionService.RemoveMovieFromDocAsync(profile.ProfileId, movie);
+            Profile profile = await _context.Profiles.Include(p => p.FavoriteMovies).FirstOrDefaultAsync(p => p.Email.Equals(email));
+            if (profile == null)
+                return new BadRequestResult();
+
+            FavoriteMovie? favorite = profile.FavoriteMovies.FirstOrDefault(f => f.MovieId == movieId);
+            if (favorite == null)
+                return new BadRequestResult();
+
+            _context.FavoriteMovies.Remove(favorite);
+            await _context.SaveChangesAsync();
             return new AcceptedResult();
         }
 
-        public async Task<ActionResult<Favorite>> GetFavoriteMoviesFromProfileAsync(string profileEmail)
+        public async Task<ActionResult<List<FavoriteMovie>>> GetFavoriteMoviesFromProfileAsync(string profileEmail)
         {
-            Profile profile = await _context.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(profileEmail));
-            Favorite profileFavoriteMovies = await _collectionService.GetDocAsync(profile.ProfileId);
-            return new OkObjectResult(profileFavoriteMovies);
+            Profile profile = await _context.Profiles.Include(p => p.FavoriteMovies).AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(profileEmail));
+            List<FavoriteMovie> profileFavMovies = profile.FavoriteMovies.ToList();
+            return new OkObjectResult(profileFavMovies);
         }
 
-        public async Task DeleteDocAsync(int profileId)
-            => await _collectionService.DeleteDocAsync(profileId);
     }
 }
