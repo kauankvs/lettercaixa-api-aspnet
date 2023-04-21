@@ -1,7 +1,6 @@
 ﻿using LettercaixaAPI.DTOs;
 using LettercaixaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LettercaixaAPI.Services.Interfaces
 {
@@ -14,7 +13,8 @@ namespace LettercaixaAPI.Services.Interfaces
         public Task<ActionResult> UpdateProfilePasswordAsync(string email, string currentPassword, string newPassword);
         public Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string email, string pictureUrl);
         public Task<ActionResult<Profile>> GetProfileAsync(string email);
-        public Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync(string name);
-        public Task<ActionResult<ProfileDisplay>> GetProfileById(int profileId);
+        public Task<ActionResult<List<Profile>>> GetProfilesByNameAsync(string name);
+        public Task<ActionResult<Profile>> GetProfileByIdAsync(int profileId);
+        public Task<ActionResult<List<Profile>>> GetAllProfilesAsync();
     }
 }

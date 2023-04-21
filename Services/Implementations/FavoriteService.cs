@@ -45,11 +45,15 @@ namespace LettercaixaAPI.Services.Implementations
             return new AcceptedResult();
         }
 
-        public async Task<ActionResult<List<FavoriteMovie>>> GetFavoriteMoviesFromProfileAsync(string profileEmail)
+        public async Task<ActionResult<List<int>>> GetFavoriteMoviesFromProfileAsync(string profileEmail)
         {
+            List<int> moviesId = new List<int>();
             Profile profile = await _context.Profiles.Include(p => p.FavoriteMovies).AsNoTracking().FirstOrDefaultAsync(p => p.Email.Equals(profileEmail));
-            List<FavoriteMovie> profileFavMovies = profile.FavoriteMovies.ToList();
-            return new OkObjectResult(profileFavMovies);
+            List<FavoriteMovie> favMovies = profile.FavoriteMovies.ToList();
+            foreach(var fav in favMovies)
+                moviesId.Add(fav.MovieId);
+
+            return new OkObjectResult(moviesId);
         }
 
     }

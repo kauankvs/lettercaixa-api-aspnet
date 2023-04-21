@@ -7,6 +7,6 @@ namespace LettercaixaAPI.Services.Interfaces
     {
         public Task<ActionResult<FavoriteMovie>> AddMovieToFavoritesAsync(string email, int movieId);
         public Task<ActionResult> RemoveMovieFromFavoritesAsync(string email, int movieId);
-        public Task<ActionResult<List<FavoriteMovie>>> GetFavoriteMoviesFromProfileAsync(string profileEmail);
+        public Task<ActionResult<List<int>>> GetFavoriteMoviesFromProfileAsync(string profileEmail);
     }
 }

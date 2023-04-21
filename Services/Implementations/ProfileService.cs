@@ -1,10 +1,9 @@
 ﻿using LettercaixaAPI.DTOs;
 using LettercaixaAPI.Models;
 using LettercaixaAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 using BC = BCrypt.Net.BCrypt;
 
 namespace LettercaixaAPI.Services.Implementations
@@ -108,7 +107,7 @@ namespace LettercaixaAPI.Services.Implementations
             return new OkObjectResult(profile);
         }
 
-        public async Task<ActionResult<List<ProfileDisplay>>> GetProfilesByNameAsync(string name) 
+        public async Task<ActionResult<List<Profile>>> GetProfilesByNameAsync(string name) 
         {
             List<Profile> profiles = await _context.Profiles.AsNoTracking()
                 .Where(p => p.FirstName.Contains(name) || p.LastName.Contains(name) || p.Username.Contains(name))
@@ -116,29 +115,26 @@ namespace LettercaixaAPI.Services.Implementations
 
             if (profiles.Equals(null))
                 return new NoContentResult();
-
-            List<ProfileDisplay> usersProfile = new List<ProfileDisplay>();
-            foreach(Profile profile in profiles)
-            {
-                usersProfile.Add(new ProfileDisplay()
-                {
-                    ProfileId = profile.ProfileId,
-                    FirstName = profile.FirstName,
-                    LastName = profile.LastName,
-                    Username = profile.Username,
-                    ProfilePicture = profile.ProfilePicture,
-                });
-            }
-            return new OkObjectResult(usersProfile);
+   
+            return new OkObjectResult(profiles);
         }
 
-        public async Task<ActionResult<ProfileDisplay>> GetProfileById(int profileId)
+        public async Task<ActionResult<Profile>> GetProfileByIdAsync(int profileId)
         {
-            Profile? profile = await _context.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.ProfileId == profileId);
+            Profile? profile = await _context.Profiles.AsNoTracking().Include(p => p.Posts).FirstOrDefaultAsync(p => p.ProfileId == profileId);
             if(profile == null)
                 return new NoContentResult();
 
             return new OkObjectResult(profile);
+        }
+
+        public async Task<ActionResult<List<Profile>>> GetAllProfilesAsync() 
+        {
+            List<Profile> profilesByPostCount = await _context.Profiles.AsNoTracking().Include(p => p.Posts).ToListAsync();
+            if (profilesByPostCount.IsNullOrEmpty())
+                return new NoContentResult();
+
+            return new OkObjectResult(profilesByPostCount);
         }
     } 
 }

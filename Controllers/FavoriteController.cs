@@ -30,7 +30,7 @@ namespace LettercaixaAPI.Controllers
         [HttpGet]
         [Route("profile")]
         [Authorize]
-        public async Task<ActionResult<List<FavoriteMovie>>> GetFavoriteMoviesFromProfileAsync()
+        public async Task<ActionResult<List<int>>> GetFavoriteMoviesFromProfileAsync()
             => await _service.GetFavoriteMoviesFromProfileAsync(User.FindFirstValue(ClaimTypes.Email));
     }
 }
