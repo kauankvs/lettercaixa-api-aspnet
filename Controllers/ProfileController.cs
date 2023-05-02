@@ -69,7 +69,7 @@ namespace LettercaixaAPI.Controllers
             => await _service.GetProfileByIdAsync(profileId);
 
         [HttpGet]
-        [Route("/all")]
+        [Route("")]
         [AllowAnonymous]
         public async Task<ActionResult<List<Profile>>> GetAllProfilesAsync()
             => await _service.GetAllProfilesAsync();
