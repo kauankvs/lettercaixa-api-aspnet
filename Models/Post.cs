@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace LettercaixaAPI.Models;
 
@@ -13,5 +14,6 @@ public partial class Post
 
     public int PostId { get; set; }
 
+    [JsonIgnore]
     public virtual Profile Profile { get; set; } = null!;
 }

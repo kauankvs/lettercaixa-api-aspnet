@@ -130,7 +130,7 @@ namespace LettercaixaAPI.Services.Implementations
 
         public async Task<ActionResult<List<Profile>>> GetAllProfilesAsync() 
         {
-            List<Profile> profiles = await _context.Profiles.AsNoTracking().ToListAsync();
+            List<Profile> profiles = await _context.Profiles.AsNoTracking().Include(p => p.Posts).ToListAsync();
             if (profiles.IsNullOrEmpty())
                 return new NoContentResult();
 
