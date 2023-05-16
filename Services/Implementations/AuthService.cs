@@ -13,8 +13,8 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class AuthService: IAuthService
     {
-        private readonly LettercaixaContext _context;
-        public AuthService(LettercaixaContext context)
+        private readonly LettercaixaDbContext _context;
+        public AuthService(LettercaixaDbContext context)
             => _context = context;
         
         public async Task<bool> VerifyIfPasswordIsEqualAsync(string loginEmail, string loginPassword) 

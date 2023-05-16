@@ -9,8 +9,8 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class PostService: IPostService
     {
-        private readonly LettercaixaContext _context;
-        public PostService(LettercaixaContext context) => _context = context;
+        private readonly LettercaixaDbContext _context;
+        public PostService(LettercaixaDbContext context) => _context = context;
 
         public async Task<ActionResult<Post>> AddCommentaryToMovieAsync(string email, PostDTO postInput) 
         {

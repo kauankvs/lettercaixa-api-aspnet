@@ -21,7 +21,7 @@ public partial class Profile
 
     public DateTime Birth { get; set; }
 
-    public virtual ICollection<FavoriteMovie> FavoriteMovies { get; } = new List<FavoriteMovie>();
+    public virtual ICollection<FavoriteMovie> FavoriteMovies { get; set; } = new List<FavoriteMovie>();
 
-    public virtual ICollection<Post> Posts { get; } = new List<Post>();
+    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 }

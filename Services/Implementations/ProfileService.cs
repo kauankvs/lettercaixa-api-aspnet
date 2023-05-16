@@ -10,10 +10,10 @@ namespace LettercaixaAPI.Services.Implementations
 {
     public class ProfileService: IProfileService
     {
-        private readonly LettercaixaContext _context;
+        private readonly LettercaixaDbContext _context;
         private readonly IAuthService _auth;
 
-        public ProfileService(LettercaixaContext context, IAuthService auth)
+        public ProfileService(LettercaixaDbContext context, IAuthService auth)
         {
             _context = context;
             _auth = auth;
