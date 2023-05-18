@@ -4,5 +4,6 @@
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
     <ActiveDebugProfile>Docker</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\kauan\projetos-web\aspnet-projects\LettercaixaAPI\LettercaixaAPI\Properties\PublishProfiles\lettercaixaregistry.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

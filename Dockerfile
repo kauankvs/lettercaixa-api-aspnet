@@ -1,23 +1,22 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 as build
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["LettercaixaAPI/LettercaixaAPI.csproj", "LettercaixaAPI/"]
+RUN dotnet restore "LettercaixaAPI/LettercaixaAPI.csproj"
+COPY . .
+WORKDIR "/src/LettercaixaAPI"
+RUN dotnet build "LettercaixaAPI.csproj" -c Release -o /app/build
 
-COPY *.csproj ./
+FROM build AS publish
+RUN dotnet publish "LettercaixaAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-RUN dotnet restore
-
-
-COPY . ./
-
-RUN dotnet publish -c Release -o out
-
-
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-
+FROM base AS final
 WORKDIR /app
-
-COPY --from=build /app/out .
-
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "LettercaixaAPI.dll"]

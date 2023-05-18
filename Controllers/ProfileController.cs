@@ -57,7 +57,7 @@ namespace LettercaixaAPI.Controllers
             => await _service.GetProfileAsync(User.FindFirstValue(ClaimTypes.Email));
 
         [HttpGet]
-        [Route("{name}")]
+        [Route("profiles/{name}")]
         [AllowAnonymous]
         public async Task<ActionResult<List<Profile>>> GetProfilesByNameAsync([FromRoute] string name)
             => await _service.GetProfilesByNameAsync(name);

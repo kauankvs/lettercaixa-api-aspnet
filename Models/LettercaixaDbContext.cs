@@ -22,26 +22,25 @@ public partial class LettercaixaDbContext : DbContext
     public virtual DbSet<Profile> Profiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=LettercaixaDB;Trusted_Connection=True; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer(Settings.ConnectionStringDb);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<FavoriteMovie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Favorite__3214EC0773C87B4D");
+            entity.HasKey(e => e.Id).HasName("PK__Favorite__3214EC07C5214818");
 
             entity.ToTable("FavoriteMovie");
 
             entity.HasOne(d => d.Profile).WithMany(p => p.FavoriteMovies)
                 .HasForeignKey(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__FavoriteM__Profi__5070F446");
+                .HasConstraintName("FK__FavoriteM__Profi__6383C8BA");
         });
 
         modelBuilder.Entity<Post>(entity =>
         {
-            entity.HasKey(e => e.PostId).HasName("PK__Post__AA126018B9E6B741");
+            entity.HasKey(e => e.PostId).HasName("PK__Post__AA1260185AA00D50");
 
             entity.ToTable("Post");
 
@@ -52,18 +51,18 @@ public partial class LettercaixaDbContext : DbContext
             entity.HasOne(d => d.Profile).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.ProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Post__ProfileId__4D94879B");
+                .HasConstraintName("FK__Post__ProfileId__60A75C0F");
         });
 
         modelBuilder.Entity<Profile>(entity =>
         {
-            entity.HasKey(e => e.ProfileId).HasName("PK__Profile__290C88E4BE9DB438");
+            entity.HasKey(e => e.ProfileId).HasName("PK__Profile__290C88E4BFF5978F");
 
             entity.ToTable("Profile");
 
-            entity.HasIndex(e => e.Username, "UQ__Profile__536C85E4ECBCDAC4").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Profile__536C85E45D9F8C70").IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__Profile__A9D105343EB320F1").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Profile__A9D1053469F33C14").IsUnique();
 
             entity.Property(e => e.Birth).HasColumnType("date");
             entity.Property(e => e.Email)
