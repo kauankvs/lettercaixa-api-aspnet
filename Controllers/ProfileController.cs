@@ -41,13 +41,13 @@ namespace LettercaixaAPI.Controllers
         [HttpPut]
         [Route("update/password")]
         [Authorize]
-        public async Task<ActionResult> UpdateProfilePasswordAsync(string currentPassword, string newPassword)
-            => await _service.UpdateProfilePasswordAsync(User.FindFirstValue(ClaimTypes.Email), currentPassword, newPassword);
+        public async Task<ActionResult> UpdateProfilePasswordAsync([FromBody] PasswordChanger passwords)
+            => await _service.UpdateProfilePasswordAsync(User.FindFirstValue(ClaimTypes.Email), passwords.CurrentPassword, passwords.NewPassword);
 
         [HttpPut]
-        [Route("/profile-picture")]
+        [Route("profile-picture")]
         [Authorize]
-        public async Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync(string pictureUrl)
+        public async Task<ActionResult<Profile>> AddOrUpdateProfilePictureAsync([FromBody] string pictureUrl)
             => await _service.AddOrUpdateProfilePictureAsync(User.FindFirstValue(ClaimTypes.Email), pictureUrl);
 
         [HttpGet]
@@ -69,7 +69,7 @@ namespace LettercaixaAPI.Controllers
             => await _service.GetProfileByIdAsync(profileId);
 
         [HttpGet]
-        [Route("")]
+        [Route("all")]
         [AllowAnonymous]
         public async Task<ActionResult<List<Profile>>> GetAllProfilesAsync()
             => await _service.GetAllProfilesAsync();
